@@ -15,8 +15,10 @@ RUN apt-get -y update && apt-get -y install wget\
 			libnss3-tools
 EXPOSE 80
 EXPOSE 443
+WORKDIR /root/
 RUN apt-get install -y vim zsh git fzf ack
 RUN sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+# MYSQL GENERATING DATABASE
 RUN			service mysql start && \
 			mysql -u root -e "CREATE USER 'user'@'localhost';" && \
 			mysql -u root -e "UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='user' AND Host='localhost';" && \
@@ -25,7 +27,23 @@ RUN			service mysql start && \
 			mysql -u root -e "CREATE DATABASE phpmyadmin;" && \
 			mysql -u root -e "GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'user'@'localhost';" && \
 			mysql -u root -e "FLUSH PRIVILEGES;"
-#RUN			wget https:
+#WORDPRESS
+RUN			wget https://wordpress.org/latest.tar.gz && \
+			tar xzf latest.tar.gz && \
+			cp wordpress/wp-config-sample.php wordpress/wp-config.php && \
+			chown -R www-data:www-data wordpress && \
+			chmod -R 775 wordpress && \
+			mv wordpress /var/www/html && \
+			rm -f latest.tar.gz
+#PHPMYADMIN
 
-WORKDIR /root/
+RUN			wget https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-english.tar.gz && \
+			mkdir /var/www/html/phpmyadmin && \
+			tar -xzf phpMyAdmin-5.1.0-english.tar.gz && \
+			rm phpMyAdmin-5.1.0-english.tar.gz && \
+			mv phpMyAdmin-5.1.0-english/* /var/www/html/phpmyadmin && \
+			mkdir /var/www/html/phpmyadmin/tmp && \
+			chmod 777 /var/www/html/phpmyadmin/tmp
+
+
 #ENTRYPOINT ["bash", "container_entrypoint.sh"]

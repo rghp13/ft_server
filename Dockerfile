@@ -43,7 +43,11 @@ RUN			wget https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-englis
 			rm phpMyAdmin-5.1.0-english.tar.gz && \
 			mv phpMyAdmin-5.1.0-english/* /var/www/html/phpmyadmin && \
 			mkdir /var/www/html/phpmyadmin/tmp && \
-			chmod 777 /var/www/html/phpmyadmin/tmp
-
+			chmod 777 /var/www/html/phpmyadmin/tmp && \
+			rmdir phpMyAdmin-5.1.0-english
+#SSL
+RUN			openssl req -newkey rsa:2048 -nodes -keyout /etc/ssl/private/ssl_key.key \
+			-x509 -days 365 -out /etc/ssl/certs/ssl_certificate.crt \
+			-subj "/C=FR/ST=75/L=Paris/O=42/CN=rpo"
 
 #ENTRYPOINT ["bash", "container_entrypoint.sh"]

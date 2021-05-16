@@ -1,0 +1,16 @@
+#!/bin/bash
+#Swap autoindex from on to off and vice versa
+
+cd /etc/nginx/sites-available/
+
+if  grep "autoindex on" default > 0 ; then
+	sed -i 's/autoindex on/autoindex off/g' default ;
+	echo "Autoindex: OFF" ;
+	mv /var/www/html/index.nginx.html /var/www/html/index.html
+else
+	sed -i 's/autoindex off/autoindex on/g' default ;
+	echo "Autoindex: ON"
+	mv /var/www/html/index.html /var/www/html/index.nginx.html
+fi
+
+service nginx reload

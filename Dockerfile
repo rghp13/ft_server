@@ -54,9 +54,10 @@ RUN			wget https://files.phpmyadmin.net/phpMyAdmin/5.1.0/phpMyAdmin-5.1.0-englis
 RUN			openssl req -newkey rsa:2048 -nodes -keyout /etc/ssl/private/ssl_key.key \
 			-x509 -days 365 -out /etc/ssl/certs/ssl_certificate.crt \
 			-subj "/C=FR/ST=75/L=Paris/O=42/CN=rpo"
-COPY		srcs/default /etc/nginx/sites-available/default
+COPY		srcs/default /etc/nginx/sites-available/
 COPY		srcs/launch.sh ./
-COPY		srcs/autoindex /bin
-COPY		srcs/index.nginx.html /var/www/html
+COPY		srcs/autoindex /bin/
+COPY		srcs/index.nginx.html /var/www/html/
 COPY		srcs/config.inc.php /var/www/html/phpmyadmin/
+COPY		srcs/wp-config.php /var/www/html/wordpress/
 ENTRYPOINT ["bash", "./launch.sh"]

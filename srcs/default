@@ -10,12 +10,13 @@ server {
 	listen [::]:443 ssl;
 	server_name localhost www.localhost 127.0.0.1;
 
-	autoindex on;
+
 	ssl_certificate /etc/ssl/certs/ssl_certificate.crt;
 	ssl_certificate_key /etc/ssl/private/ssl_key.key;
 
 	root /var/www/html;
 	index index.html index.htm index.nginx-debian.html index.php;
+	autoindex on;
 	location /		{
 		try_files $uri $uri/ =404;
 	}

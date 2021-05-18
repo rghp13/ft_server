@@ -1,7 +1,13 @@
 #Base image installation
 FROM debian:buster
 
-#COPY everything that you need that's in the srcs dir
+#Commands
+#docker run -itp 80:80 -p 443:443 <imagename>
+#docker build -t <image name> .
+#docker stop <container name>
+#docker exec -ti <container id> /bin/zsh
+#docker start <container id>
+#docker create -it -p 80:80 -p 443:443 <image name>
 
 RUN apt-get -y update && apt-get -y install wget\
 			nginx \
@@ -21,7 +27,7 @@ RUN apt-get -y update && apt-get -y install wget\
 EXPOSE 80
 EXPOSE 443
 WORKDIR /root/
-RUN apt-get install -y vim zsh git fzf ack
+RUN apt-get install -y vim zsh git
 RUN sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 # MYSQL GENERATING DATABASE
 RUN			service mysql start && \

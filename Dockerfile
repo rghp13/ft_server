@@ -2,11 +2,12 @@
 FROM debian:buster
 
 #Commands
-#docker run -itp 80:80 -p 443:443 <imagename>
+#don't forget to disable nginx with sudo service nginx stop
 #docker build -t <image name> .
+#docker run -itp 80:80 -p 443:443 <imagename>
+#docker start <container id>
 #docker stop <container name>
 #docker exec -ti <container id> /bin/zsh
-#docker start <container id>
 #docker create -it -p 80:80 -p 443:443 <image name>
 
 RUN apt-get -y update && apt-get -y install wget\
